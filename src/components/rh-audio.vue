@@ -18,7 +18,6 @@
       </audio>
     </vue-plyr>
 
-    
   </div>
 </template>
 
@@ -41,15 +40,17 @@ export default {
     toggleStatus() {
       this.checked = !this.checked;
       if (this.checked === true) {
+        this.$emit('setTime')
         this.plyrAudio.currentTime = this.time;
         this.plyrAudio.play();
+
       } else {
         this.plyrAudio.stop();
       }
     }
   },
   mounted() {
-    this.plyrAudio.on("canplaythrough", () => {
+    this.plyrAudio.on("canplay", () => {
       this.loading = false;
     });
   },
@@ -65,10 +66,15 @@ export default {
         this.plyrAudio.stop();
       }
       if (newVal === 1 && this.checked === true) {
-        this.plyrAudio.currentTime = this.time;
+        // this.plyrAudio.currentTime = this.time;
         // the video has started playing, start this audio, if the toggle is selected and from the duration that the video is
         this.plyrAudio.play();
       }
+    },
+     time: function(newVal, oldVal) {
+       console.log('time', newVal)
+       this.time = newVal;
+       this.plyrAudio.currentTime = newVal;
     }
   },
   components: {

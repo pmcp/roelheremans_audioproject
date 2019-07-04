@@ -1,15 +1,12 @@
 <template>
   <div id="app">
-    {{ audio}}
     <rh-audio v-for="(item, index) in audio"
       :key="index"
       :src="item.url"
       :time="videoTime"
       :status="videoStatus"
+      @setTime="getCurrentTime"
     ></rh-audio>
-
-
-
 
     <vue-plyr ref="plyrVideo">
      <div class="plyr__video-embed">
@@ -33,17 +30,28 @@ export default {
     return {
       videoTime: 0,
       videoStatus: 0,
-      videoSrc: 'https://www.youtube.com/embed/bTqVqk7FSmY?iv_load_policy=3&modestbranding=1&playsinline=1&showinfo=0&rel=0&enablejsapi=1',
+      videoSrc: 'https://www.youtube.com/embed/wcIy-V4WTVU?iv_load_policy=3&modestbranding=1&playsinline=1&showinfo=0&rel=0&enablejsapi=1',
       audio: [
-        {'url': 'https://cdn.plyr.io/static/demo/Kishi_Bashi_-_It_All_Began_With_a_Burst.mp3'}
+        {'url': './blue_quartet_a_online_visioneren.mp3'},
+        {'url': './yellow_quartet_a_online_visioneren.mp3'},
+        {'url': './red_quartet_a_online_visioneren.mp3'},
+        {'url': './yellow_quartet_a_online_visioneren.mp3'},
       ]
     };
   },
-  methods: {},
+  methods: {
+    getCurrentTime() {
+      console.log('test')
+      this.videoTime = this.plyrVideo.currentTime;
+    }
+  },
   mounted() {
     this.plyrVideo.on("play", () => {
-      this.videoTime = this.plyrVideo.currentTime;
       this.videoStatus = 1;
+      this.getCurrentTime();
+    });
+    this.plyrVideo.on("playing", () => {
+      this.getCurrentTime();
 
     });
     this.plyrVideo.on("stop", () => {
