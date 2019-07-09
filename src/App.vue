@@ -1,11 +1,26 @@
 <template>
   <div id="app">
 
-    <!-- List of series -->
+     <vue-plyr
+      ref="plyrVideo"
+          
+      hideYouTubeDOMError
+    >
+      <div class="plyr__video-embed">
+        <iframe
+          :src="videoSrc"
+          allowfullscreen
+          allowtransparency
+          allow="autoplay"
+        >
+        </iframe>
+      </div>
+    </vue-plyr>
+
 
     <div class="flex justify-left w-100">
       <div>
-        <div class="pa1" v-for="s in series" :key="s.id">
+        <div class="pa3 pb0" v-for="s in series" :key="s.id">
           <a @click="setActiveSeries(s.id)">{{s.name}}</a>
       </div>
       </div>
@@ -27,21 +42,7 @@
         />
       
     </div>
-    <vue-plyr
-      ref="plyrVideo"
-          
-      hideYouTubeDOMError
-    >
-      <div class="plyr__video-embed">
-        <iframe
-          :src="videoSrc"
-          allowfullscreen
-          allowtransparency
-          allow="autoplay"
-        >
-        </iframe>
-      </div>
-    </vue-plyr>
+   
 
   </div>
 </template>

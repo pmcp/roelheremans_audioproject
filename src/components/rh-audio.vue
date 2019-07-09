@@ -1,13 +1,14 @@
 <template>
-  <div class="pa1">
+  <div class="pa3 pb0 flex">
     <a 
       @click="toggleStatus()"
+      class="position:relative;z-index:5;"
       :class="{ 'o-20': !checked }"
     >
       {{ name }}
     </a>
-    <!-- <div style="visibility: hidden; height:0;"> -->
-      <div>
+    <div style="opacity:1;height:0">
+      
       <vue-plyr ref="plyrAudio">
         <audio
           crossorigin
@@ -40,6 +41,7 @@ export default {
       this.checked = !this.checked;
       if (this.checked === true) {
         this.$emit("getTime");
+        
       } else {
         this.plyrAudio.stop();
       }
@@ -68,9 +70,11 @@ export default {
       }
     },
     time: function(newVal, oldVal) {
-      console.log("time", newVal);
       this.time = newVal;
       this.plyrAudio.currentTime = newVal;
+      if (this.checked === true) {
+        this.plyrAudio.play();
+      }
     }
   }
 };

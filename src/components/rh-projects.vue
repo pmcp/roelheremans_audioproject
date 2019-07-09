@@ -1,6 +1,6 @@
 <template>
   <div id="project">
-    <div v-for="p in projects" class="pa1">
+    <div v-for="p in projects" class="pa3 pb0">
       <a @click="$emit('setActiveProject', p)" >{{p.name}}</a>
     </div>
   </div>
