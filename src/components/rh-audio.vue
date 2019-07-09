@@ -1,30 +1,29 @@
 <template>
-  <div>
-    <loading-checkbox
-      :checked="checked"
-      :loading="loading"
-      label=""
-      @click.native="toggleStatus"
-    />
-    <vue-plyr ref="plyrAudio">
-      <audio
-        crossorigin
-        playsinline
-      >
-        <source
-          :src="src"
-          type="audio/mp3"
+  <div class="pa1">
+    <a 
+      @click="toggleStatus()"
+      :class="{ 'o-20': !checked }"
+    >
+      {{ name }}
+    </a>
+    <!-- <div style="visibility: hidden; height:0;"> -->
+      <div>
+      <vue-plyr ref="plyrAudio">
+        <audio
+          crossorigin
+          playsinline
         >
-      </audio>
-    </vue-plyr>
-
+          <source
+            :src="src"
+            type="audio/mp3"
+          >
+        </audio>
+      </vue-plyr>
+    </div>
   </div>
 </template>
 
 <script>
-import LoadingCheckbox from "vue-loading-checkbox";
-import "vue-loading-checkbox/dist/LoadingCheckbox.css";
-
 export default {
   name: "rh-audio",
   data() {
@@ -34,16 +33,13 @@ export default {
       checked: true
     };
   },
-  props: ["time", "status", "src"],
+  props: ["time", "status", "src", "name"],
 
   methods: {
     toggleStatus() {
       this.checked = !this.checked;
       if (this.checked === true) {
-        this.$emit('setTime')
-        this.plyrAudio.currentTime = this.time;
-        this.plyrAudio.play();
-
+        this.$emit("getTime");
       } else {
         this.plyrAudio.stop();
       }
@@ -71,14 +67,11 @@ export default {
         this.plyrAudio.play();
       }
     },
-     time: function(newVal, oldVal) {
-       console.log('time', newVal)
-       this.time = newVal;
-       this.plyrAudio.currentTime = newVal;
+    time: function(newVal, oldVal) {
+      console.log("time", newVal);
+      this.time = newVal;
+      this.plyrAudio.currentTime = newVal;
     }
-  },
-  components: {
-    LoadingCheckbox
   }
 };
 </script>
