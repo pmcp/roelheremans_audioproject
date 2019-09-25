@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-      <p>The safely stored number: {{safelyStoredNumber}}<p>
 
      <vue-plyr
       ref="plyrVideo"
@@ -49,10 +48,8 @@
 </template>
 
 <script>
-// import { db } from "./firebase";
 
-import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex'
+import { db } from "./firebase";
 import rhProjects from "./components/rh-projects";
 import rhTracks from "./components/rh-tracks";
 
@@ -75,16 +72,10 @@ export default {
       ]
     };
   },
-  // firestore: {
-  //   series: db.collection("roel_series")
-  // },
+  firestore: {
+    series: db.collection("roel_series")
+  },
   methods: {
-    ...mapMutations([
-      // Mounts the "incrementStoredNumber" mutation to `this.incrementStoredNumber()`.
-      'incrementStoredNumber',
-      // Mounts the "setStoredNumber" mutation to `this.setStoredNumber(newNumber)`.
-      'setStoredNumber'
-    ]),
     setActiveSeries(id) {
       this.activeSeries = id;
     },
@@ -111,14 +102,7 @@ export default {
       this.videoTime = this.plyrVideo.currentTime;
     }
   },
-  computed: {
-    ...mapGetters([
-      // Mounts the "safelyStoredNumber" getter to the scope of your component.
-      'safelyStoredNumber'
-    ])
-  },
   mounted() {
-    
     this.plyrVideo.on("play", () => {
       this.videoStatus = 1;
       this.getCurrentTime();
